@@ -18,8 +18,22 @@
         <q-icon name="search" />
       </template>
       <template v-slot:after>
-        <q-btn round dense flat icon="tune" color="black" />
-        <q-btn round dense flat icon="more_vert" color="black" />
+        <q-btn
+          round
+          dense
+          flat
+          icon="tune"
+          color="white"
+          class="bg-primary q-mr-sm"
+        />
+        <q-btn
+          round
+          dense
+          flat
+          icon="more_vert"
+          color="white"
+          class="bg-primary"
+        />
       </template>
     </q-input>
     <div class="data" v-show="count > 0"></div>
