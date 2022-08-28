@@ -7,16 +7,15 @@
           style="width: 5px; height: 100%; border-radius: 25px"
         ></div>
       </q-card-section>
-      <q-card-section style="margin-right: 5%">
-        <div class="text-h6">Title</div>
+      <q-card-actions>
+        <q-btn flat round icon="loyalty" />
+      </q-card-actions>
+      <q-card-section style="margin-left: 9%">
+        <div class="text-h6">Enseigne</div>
         <div class="text-h9">28/08/2022</div>
-        <div class="text-h10">15h08</div>
-      </q-card-section>
-      <q-card-section style="margin-top: 6%">
-        <div class="text-h6">5045.545€</div>
       </q-card-section>
       <q-card-section
-        style="position: absolute; right: 0; margin-top: 4%"
+        style="position: absolute; right: 0"
         vertical
         class="justify-around q-px-md"
       >

@@ -31,7 +31,7 @@ const routes = [
         component: () => import("pages/home/dashBoard.vue"),
       },
       { path: "Menu", component: () => import("pages/home/menuPage.vue") },
-      { path: "Compte", component: () => import("pages/home/comptePage.vue") },
+      { path: "Wallet", component: () => import("pages/home/walletPage.vue") },
     ],
   },
   {

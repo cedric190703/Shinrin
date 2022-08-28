@@ -38,16 +38,16 @@
         once
         transition="scale"
       >
-        <TiquetComp />
+        <WalletComp />
       </q-intersection>
     </div>
     <div class="no-tiquets" style="text-align: center" v-show="count === 0">
       <img
-        src="../../assets/tiquets.png"
+        src="../../assets/wallet.png"
         alt="image-shopping"
         style="width: 100%; margin-top: 20%"
       />
-      <div class="text-h4 text-purple-8">Pas encore de tiquets</div>
+      <div class="text-h4 text-purple-8">Pas encore de cartes de fidélités</div>
     </div>
     <q-page-sticky position="bottom-right" :offset="[18, 18]">
       <q-btn fab icon="add" color="purple-9" />
@@ -56,22 +56,15 @@
 </template>
 <script>
 import { ref } from "vue";
-import TiquetComp from "src/components/tiquetComp.vue";
+import WalletComp from "../../components/walletComp.vue";
 export default {
   setup() {
-    const count = ref(0);
-    const search = ref("");
+    const count = ref(1);
     return {
       count,
-      search,
     };
   },
-  components: { TiquetComp },
+  components: { WalletComp },
 };
 </script>
-<style>
-@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@1,300&display=swap");
-body {
-  font-family: "Roboto", sans-serif;
-}
-</style>
+<style></style>

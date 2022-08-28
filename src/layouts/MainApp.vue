@@ -14,14 +14,15 @@
           <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg" />
         </q-avatar>
         <q-toolbar-title> Shinrin </q-toolbar-title>
-        <q-toolbar-title style="position: absolute; right: 3%">{{
-          title
-        }}</q-toolbar-title>
+        <q-toolbar-title
+          style="position: absolute; right: 5%; font-size: x-large"
+          >{{ title }}</q-toolbar-title
+        >
       </q-toolbar>
     </q-header>
 
     <q-footer id="footer">
-      <q-tabs v-model="tab">
+      <q-tabs>
         <q-route-tab
           name="tiquets"
           icon="receipt_long"
@@ -30,19 +31,19 @@
           @click="title = 'Tiquets'"
         />
         <q-route-tab
-          name="dashboard"
+          name="wallet"
+          icon="wallet"
+          to="/home/Wallet"
+          label="Wallet"
+          @click="title = 'Wallet'"
+        />
+        <q-route-tab
+          name="tableau de bord"
           icon="analytics"
           to="/home/DashBoard"
           label="Tableau de bord"
           @click="title = 'Tableau de bord'"
         ></q-route-tab>
-        <q-route-tab
-          name="compte"
-          icon="person"
-          to="/home/Compte"
-          label="Compte"
-          @click="title = 'Compte'"
-        />
         <q-route-tab
           @click="title = 'Menu'"
           name="menu"
@@ -78,7 +79,7 @@ export default {
   setup() {
     const title = ref("Tiquets");
     const leftDrawerOpen = ref(false);
-    const tab = ref("tiquets");
+    const tab = ref("menu");
     return {
       title,
       tab,

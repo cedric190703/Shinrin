@@ -2,7 +2,6 @@
   <div class="q-pa-md row items-start q-gutter-md">
     <q-input
       outlined
-      v-model="text"
       style="width: 100%; margin-left: 5%"
       label="Rechercher des données"
       maxlength="12"
@@ -24,7 +23,7 @@
       </template>
     </q-input>
     <div class="data" v-show="count > 0"></div>
-    <div class="noData" v-show="count === 0">
+    <div class="noData" style="text-align: center" v-show="count === 0">
       <img
         src="../../assets/data.png"
         alt="image-shopping"

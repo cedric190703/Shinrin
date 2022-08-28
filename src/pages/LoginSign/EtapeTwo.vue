@@ -57,7 +57,7 @@ export default {
     const text = ref("");
     const create = () => {
       $q.notify({
-        message: "Vous êtes bien connecté !",
+        message: "Votre compte a bien été créé !",
         color: "positive",
         actions: [
           {
