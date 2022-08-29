@@ -26,14 +26,7 @@
           color="white"
           class="bg-primary q-mr-sm"
         />
-        <q-btn
-          round
-          dense
-          flat
-          icon="more_vert"
-          color="white"
-          class="bg-primary"
-        />
+        <q-btn round dense flat icon="sort" color="white" class="bg-primary" />
       </template>
     </q-input>
     <div class="data" v-show="count > 0"></div>

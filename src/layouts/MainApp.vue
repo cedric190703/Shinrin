@@ -24,11 +24,11 @@
     <q-footer id="footer">
       <q-tabs>
         <q-route-tab
-          name="tiquets"
+          name="tickets"
           icon="receipt_long"
           to="/home/"
-          label="Tiquets"
-          @click="title = 'Tiquets'"
+          label="Tickets"
+          @click="title = 'Tickets'"
         />
         <q-route-tab
           name="wallet"
@@ -77,7 +77,7 @@ export default {
   name: "MainApp",
 
   setup() {
-    const title = ref("Tiquets");
+    const title = ref("Tickets");
     const leftDrawerOpen = ref(false);
     const tab = ref("menu");
     return {

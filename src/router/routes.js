@@ -24,7 +24,7 @@ const routes = [
     children: [
       {
         path: "",
-        component: () => import("pages/home/tiquetsPage.vue"),
+        component: () => import("pages/home/ticketsPage.vue"),
       },
       {
         path: "DashBoard",

@@ -36,7 +36,7 @@
             round
             dense
             flat
-            icon="more_vert"
+            icon="filter_list"
             color="white"
             class="bg-primary"
           />
