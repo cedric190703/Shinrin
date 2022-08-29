@@ -4,6 +4,7 @@ import { createStore } from "vuex";
 import tickets from "./tickets";
 import wallet from "./wallet";
 import data from "./data";
+import user from "./user";
 
 /*
  * If not building with SSR mode, you can
@@ -20,6 +21,7 @@ export default store(function (/* { ssrContext } */) {
       tickets,
       wallet,
       data,
+      user,
     },
 
     // enable strict mode (adds overhead!)

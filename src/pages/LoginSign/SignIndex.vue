@@ -14,27 +14,49 @@
     <q-input
       style="width: 80%; margin: 5% 10%"
       type="email"
+      v-model="email"
       label="E-mail"
+      :rules="[(val) => !!val || 'Ce champ est requis']"
       outlined
       placeholder="exemple@email.com"
       filled
     />
     <q-input
+      v-model="password"
       style="width: 80%; margin: 5% 10%"
-      type="password"
-      label="mot de passe"
       filled
-    />
+      :rules="[(val) => !!val || 'Ce champ est requis']"
+      :type="isPwd ? 'password' : 'text'"
+      label="Mot de passe"
+    >
+      <template v-slot:append>
+        <q-icon
+          :name="isPwd ? 'visibility_off' : 'visibility'"
+          class="cursor-pointer"
+          @click="isPwd = !isPwd"
+        />
+      </template>
+    </q-input>
     <q-input
+      v-model="password2"
       style="width: 80%; margin: 5% 10%"
-      type="password"
-      label="Confimation du mot de passe"
       filled
-    />
+      :rules="[(val) => !!val || 'Ce champ est requis']"
+      :type="isPwd ? 'password' : 'text'"
+      label="Mot de passe"
+    >
+      <template v-slot:append>
+        <q-icon
+          :name="isPwd ? 'visibility_off' : 'visibility'"
+          class="cursor-pointer"
+          @click="isPwd = !isPwd"
+        />
+      </template>
+    </q-input>
     <q-btn
       style="width: 80%; margin-top: 5%; border-radius: 20px; height: 50px"
       class="text-white bg-primary"
-      to="/EtapeTwo"
+      @click="suivant()"
     >
       Suivant
     </q-btn>
@@ -47,13 +69,69 @@
 </template>
 
 <script>
+import { useStore } from "vuex";
+import { useQuasar } from "quasar";
+import { useRouter } from "vue-router";
 import { ref } from "vue";
 export default {
   setup() {
-    const text = ref("");
-
+    const $q = useQuasar();
+    const $store = useStore();
+    const router = useRouter();
+    const email = ref("");
+    const password = ref("");
+    const password2 = ref("");
+    const isPwd = ref(true);
+    const suivant = () => {
+      if (
+        email.value !== "" &&
+        password.value !== "" &&
+        password2.value !== ""
+      ) {
+        if (password.value !== password2.value) {
+          notSamePassword();
+        } else {
+          console.log("hello");
+          $store.commit("user/etapeOne", {
+            email: email.value,
+            password: password.value,
+          });
+          router.push({ path: "/EtapeTwo" });
+        }
+      } else {
+        $q.notify({
+          message: "Des champs n'ont pas été remplis",
+          color: "negative",
+          actions: [
+            {
+              label: "OK",
+              color: "white",
+              handler: () => {},
+            },
+          ],
+        });
+      }
+    };
+    const notSamePassword = () => {
+      $q.notify({
+        message: "Les deux mots de passe ne correspondent pas",
+        color: "negative",
+        actions: [
+          {
+            label: "OK",
+            color: "white",
+            handler: () => {},
+          },
+        ],
+      });
+    };
     return {
-      text,
+      email,
+      password,
+      password2,
+      suivant,
+      notSamePassword,
+      isPwd,
     };
   },
 };

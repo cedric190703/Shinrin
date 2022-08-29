@@ -8,8 +8,10 @@
     <div class="text-h5" style="margin-top: 5%">Se connecter</div>
     <q-input
       style="width: 80%; margin: 5% 10%"
+      v-model="email"
       type="email"
       label="E-mail"
+      :rules="[(val) => !!val || 'Ce champ est requis']"
       placeholder="exemple@email.com"
       filled
     />
@@ -17,6 +19,7 @@
       v-model="password"
       style="width: 80%; margin: 5% 10%"
       filled
+      :rules="[(val) => !!val || 'Ce champ est requis']"
       :type="isPwd ? 'password' : 'text'"
       label="Mot de passe"
     >
@@ -42,11 +45,24 @@
 </template>
 
 <script>
+import { useStore } from "vuex";
 import { useQuasar } from "quasar";
-import { ref } from "vue";
+import { ref, computed } from "vue";
 export default {
   setup() {
     const $q = useQuasar();
+    const $store = useStore();
+    const password = ref("");
+    const email = ref("");
+    const userStatus = computed({
+      get: () => $store.state.user.userStatus,
+    });
+    const valide = () => {
+      $store.commit("user/UserLogin", {
+        email: email.value,
+        password: password.value,
+      });
+    };
     const login = () => {
       $q.notify({
         message: "Vous êtes bien connecté !",
@@ -60,14 +76,14 @@ export default {
         ],
       });
     };
-    const text = ref("");
     const isPwd = ref(true);
-    const password = ref("");
     return {
-      text,
       isPwd,
       password,
+      email,
       login,
+      userStatus,
+      valide,
     };
   },
 };
