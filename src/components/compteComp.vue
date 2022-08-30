@@ -1,6 +1,13 @@
 <template>
   <div>
-    <q-btn push color="primary" icon="arrow_back" style="position: absolute" />
+    <q-btn
+      push
+      color="primary"
+      round
+      icon="arrow_back"
+      style="position: absolute"
+      @click="setElement('')"
+    />
 
     <div class="q-pb-md text-h6" style="margin-left: 65%">Mon compte</div>
     <div class="text-center q-mb-lg">
@@ -14,7 +21,6 @@
         round
         color="primary"
         icon="edit"
-        dense
         size="small"
       />
     </div>
@@ -59,18 +65,25 @@
 
 <script>
 import { ref } from "vue";
+import { useStore } from "vuex";
 export default {
   name: "compteComp",
   setup() {
+    const $store = useStore();
+    const setElement = (element) => {
+      $store.commit("user/setElement", element);
+    };
     const nom = ref("Nom");
     const prenom = ref("Nom");
     const telephone = ref("0645546574");
     const mail = ref("exemple@gmail.com");
+
     return {
       nom,
       prenom,
       telephone,
       mail,
+      setElement,
     };
   },
 };

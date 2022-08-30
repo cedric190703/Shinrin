@@ -36,7 +36,7 @@
         alt="image-shopping"
         style="width: 100%; margin-top: 25%"
       />
-      <div class="text-h4 text-purple-8">Pas encore de données</div>
+      <div class="text-h4 text-purple-8">Pas encore de donnée</div>
     </div>
   </div>
 </template>

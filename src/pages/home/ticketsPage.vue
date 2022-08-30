@@ -32,25 +32,26 @@
     </div>
     <div>
       <q-intersection
-        class="tiquets"
+        class="tickets"
         v-show="filter().length > 0"
         v-for="(item, index) in filter()"
         :key="index"
         once
         transition="scale"
       >
-        <TiquetComp
+        <TicketComp
           :index="index"
           :enseigne="item.enseigne"
           :date="item.date"
           :heure="item.heure"
           :prix="item.prix"
           :tag="item.tag"
+          :typeAchat="item.typeAchat"
         />
       </q-intersection>
     </div>
     <div
-      class="no-tiquets"
+      class="no-tickets"
       style="text-align: center"
       v-show="filter().length === 0"
     >
@@ -59,7 +60,7 @@
         alt="image-shopping"
         style="width: 100%; margin-top: 20%"
       />
-      <div class="text-h4 text-purple-8">Pas de tickets</div>
+      <div class="text-h4 text-purple-8">Pas de ticket</div>
     </div>
     <q-page-sticky position="bottom-right" :offset="[18, 18]">
       <q-btn fab icon="add" @click="setCard()" color="purple-9" />
@@ -91,6 +92,7 @@
               v-model="file"
               @rejected="onRejected"
               label="Custom header"
+              style="width: 100%"
             >
               <template v-slot:header="scope">
                 <div class="row no-wrap items-center q-pa-sm q-gutter-xs">
@@ -162,7 +164,7 @@
       </q-dialog>
       <q-dialog v-model="info">
         <q-card class="my-card">
-          <AddTiquet />
+          <AddTicket />
         </q-card>
       </q-dialog>
     </q-page-sticky>
@@ -172,8 +174,8 @@
 import { useStore } from "vuex";
 import { useQuasar } from "quasar";
 import { ref, computed } from "vue";
-import TiquetComp from "src/components/tiquetComp.vue";
-import AddTiquet from "src/components/addTiquet.vue";
+import TicketComp from "src/components/ticketComp.vue";
+import AddTicket from "src/components/addTicket.vue";
 import FiltresComp from "../../components/filtresComp.vue";
 import TriComp from "../../components/triComp.vue";
 export default {
@@ -188,40 +190,57 @@ export default {
     const $store = useStore();
     const card = computed({
       get: () => $store.state.tickets.card,
+      set: (val) => {
+        $store.commit("tickets/setCard");
+      },
     });
     const info = computed({
       get: () => $store.state.tickets.info,
+      set: (val) => {
+        $store.commit("tickets/setInfo");
+      },
     });
     const upload = computed({
       get: () => $store.state.tickets.upload,
+      set: (val) => {
+        $store.commit("tickets/setUpload");
+      },
     });
     const setCard = () => {
-      $store.commit("tickets/setCard", true);
+      $store.commit("tickets/setCard");
     };
     const setUpload = () => {
-      $store.commit("tickets/setUpload", true);
+      $store.commit("tickets/setUpload");
     };
     const setInfo = () => {
-      $store.commit("tickets/setInfo", true);
+      $store.commit("tickets/setInfo");
     };
-    // const tickets = computed({
-    //   get: () => $store.state.tickets.tickets,
-    // });
+    const filtre = ref("Enseigne");
+    const priceMax = ref(0);
+    const priceMin = ref(0);
     const filter = () => {
       if ($store.state.tickets.tickets.length === 0) {
         return [];
       }
-      return $store.state.tickets.tickets.filter((ticket) =>
-        ticket.enseigne.includes(search.value)
-      );
+      if (filtre.value === "Enseigne") {
+        console.log("enseigne");
+        return $store.state.tickets.tickets.filter((ticket) =>
+          ticket.enseigne.includes(search.value)
+        );
+      } else if (filtre.value === "Tag") {
+        console.log("tag");
+        return $store.state.tickets.tickets.filter((ticket) =>
+          ticket.tag.includes(search.value)
+        );
+      } else {
+        console.log("price");
+        return [];
+        // return $store.state.tickets.tickets.filter((ticket) =>
+        //   ticket.price <= priceMax.value && ticket.price >= priceMin.value
+        // );
+      }
     };
-    // fonctions
-    // const addTiquet = () => {
-    //   card.value = false;
-    //   upload.value = false;
-    //   info.value = false;
-    //   file.value = null;
-    // };
+    const sortTicket = () => {};
     const checkFileType = (File) => {
       if (
         File[0].type === "image/png" ||
@@ -234,7 +253,6 @@ export default {
         return "text/plain";
       }
     };
-
     const onRejected = () => {
       $q.notify({
         type: "negative",
@@ -248,7 +266,7 @@ export default {
         ],
       });
     };
-
+    // section photo
     const TakePhoto = () => {};
 
     return {
@@ -262,19 +280,26 @@ export default {
       file,
       checkFileType,
       setInfo,
+      sortTicket,
       type,
       info,
       filter,
       setUpload,
-      // tickets,
+      priceMax,
+      priceMin,
+      filtre,
     };
   },
-  components: { TiquetComp, AddTiquet, FiltresComp, TriComp },
+  components: { TicketComp, AddTicket, FiltresComp, TriComp },
 };
 </script>
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@1,300&display=swap");
 body {
   font-family: "Roboto", sans-serif;
+}
+
+.activeClass {
+  background-color: #155fd7;
 }
 </style>

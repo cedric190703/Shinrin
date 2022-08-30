@@ -63,6 +63,7 @@
 </template>
 <script>
 import { useStore } from "vuex";
+import { useQuasar } from "quasar";
 import { date } from "quasar";
 import { ref } from "vue";
 export default {
@@ -70,6 +71,7 @@ export default {
   setup() {
     const $store = useStore();
     const tiquet = ref([]);
+    const $q = useQuasar();
     const enseigne = ref("");
     const tag = ref("");
     const prix = ref("");
@@ -87,7 +89,19 @@ export default {
           date: dateA,
           heure: heure,
         };
-        $store.commit("tickets/addTiquet", tiquet.value);
+        $store.commit("tickets/addTicket", tiquet.value);
+      } else {
+        $q.notify({
+          message: "Des champs n'ont pas été remplis",
+          color: "negative",
+          actions: [
+            {
+              label: "OK",
+              color: "white",
+              handler: () => {},
+            },
+          ],
+        });
       }
     };
     return {

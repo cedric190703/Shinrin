@@ -7,7 +7,9 @@ const state = {
     telephone: "",
     email: "",
     password: "",
+    modeSombre: false,
   },
+  element: "",
 };
 
 const guetters = {};
@@ -19,6 +21,12 @@ const mutations = {
     state.user.nom = user.nom;
     state.user.prenom = user.prenom;
     state.users.push(state.user);
+  },
+  ModeSombre: (state) => {
+    state.user.modeSombre = !state.user.modeSombre;
+  },
+  setElement: (state, element) => {
+    state.element = element;
   },
   etapeOne: (state, user) => {
     console.log("Etape One passed");

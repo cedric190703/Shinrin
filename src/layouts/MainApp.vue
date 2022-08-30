@@ -93,13 +93,13 @@ export default {
 </script>
 
 <style>
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 835px) {
   #menu {
     display: none;
   }
 }
 
-@media screen and (min-width: 767px) {
+@media screen and (min-width: 835px) {
   #footer {
     display: none;
   }

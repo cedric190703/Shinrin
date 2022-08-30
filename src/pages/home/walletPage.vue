@@ -59,9 +59,9 @@
       <img
         src="../../assets/wallet.png"
         alt="image-shopping"
-        style="width: 100%; margin-top: 20%"
+        style="width: 100%; margin-top: 18%"
       />
-      <div class="text-h4 text-purple-8">Pas encore de cartes de fidélités</div>
+      <div class="text-h4 text-purple-8">Pas de carte de fidélité</div>
     </div>
     <q-page-sticky position="bottom-right" :offset="[18, 18]">
       <q-btn fab icon="add" color="purple-9" />
@@ -73,7 +73,7 @@ import { ref } from "vue";
 import WalletComp from "../../components/walletComp.vue";
 export default {
   setup() {
-    const count = ref(1);
+    const count = ref(0);
     return {
       count,
     };

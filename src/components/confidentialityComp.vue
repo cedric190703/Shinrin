@@ -7,6 +7,7 @@
       text-color="white"
       round
       icon="arrow_back"
+      @click="setElement('')"
     />
     <q-list bordered>
       <q-expansion-item
@@ -105,10 +106,18 @@
 </template>
 
 <script>
+import { useStore } from "vuex";
 export default {
-  // name: 'ComponentName',
+  name: "confidentialityComp",
   setup() {
-    return {};
+    const $store = useStore();
+
+    const setElement = (element) => {
+      $store.commit("user/setElement", element);
+    };
+    return {
+      setElement,
+    };
   },
 };
 </script>

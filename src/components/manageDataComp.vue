@@ -1,6 +1,7 @@
 <template>
   <div>
-    <q-card class="q-ma-sm" v-for="n in 10" :key="n">
+    <q-btn icon="arrow_back" round color="primary" @click="setElement('')" />
+    <q-card class="q-ma-sm" v-for="n in 3" :key="n">
       <q-card-section class="row">
         <q-card-section>
           <q-color style="width: 100%"></q-color>
@@ -17,10 +18,17 @@
 </template>
 
 <script>
+import { useStore } from "vuex";
 export default {
   name: "manageData",
   setup() {
-    return {};
+    const $store = useStore();
+    const setElement = (element) => {
+      $store.commit("user/setElement", element);
+    };
+    return {
+      setElement,
+    };
   },
 };
 </script>

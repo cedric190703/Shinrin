@@ -3,26 +3,40 @@ const state = {
   card: false,
   info: false,
   upload: false,
+  viewTicket: false,
+  zoomTicket: false,
 };
 
 const guetters = {};
 
 const mutations = {
-  setCard: (state, elt) => {
-    state.card = elt;
+  setUpload: (state) => {
+    state.upload = !state.upload;
   },
-  setUpload: (state, elt) => {
-    state.upload = elt;
+  setCard: (state) => {
+    state.card = !state.card;
   },
-  setInfo: (state, elt) => {
-    state.info = elt;
+  setInfo: (state) => {
+    state.info = !state.info;
   },
-  addTiquet: (state, e) => {
+  consultTicket: (state) => {
+    state.viewTicket = !state.viewTicket;
+  },
+  zoomTicket: (state) => {
+    state.zoomTicket = !state.zoomTicket;
+  },
+  setChanges: (state, elt) => {
+    console.log("hello");
+    state.viewTicket = false;
+    state.tickets[elt[0]] = elt[1];
+  },
+  addTicket: (state, e) => {
     state.card = false;
     state.upload = false;
     state.info = false;
     state.tickets.push(e);
   },
+
   removeTicket: (state, index) => {
     console.log("hello", index);
     state.tickets.splice(index, 1);
