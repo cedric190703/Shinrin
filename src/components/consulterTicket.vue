@@ -58,11 +58,13 @@
           <q-icon name="euro" />
         </template>
       </q-input>
-      <q-input filled v-model="TypeAchat" label="Type d'achat(optionnel)">
-        <template v-slot:prepend>
-          <q-icon name="shopping_bag" />
-        </template>
-      </q-input>
+      <q-select
+        rounded
+        outlined
+        v-model="TypeAchat"
+        :options="options"
+        label="Type d'achat(optionnel)"
+      />
     </q-card-section>
 
     <div style="text-align: center">
@@ -83,6 +85,7 @@
   </div>
 </template>
 <script>
+import { date } from "quasar";
 import { useStore } from "vuex";
 import { useQuasar } from "quasar";
 import { ref, computed } from "vue";
@@ -110,6 +113,24 @@ export default {
     const close = () => {
       $store.commit("tickets/consultTicket");
     };
+    const options = ref([
+      "Alimentation",
+      "Artisan",
+      "Commerces de proximité",
+      "Culture",
+      "Centre commercial",
+      "Divers",
+      "Habillement",
+      "Jardinage et bricolage",
+      "Maison et décoration",
+      "Santé et bien-être",
+      "Services",
+      "Sortir",
+      "Sports et loisirs",
+      "Tourisme",
+      "Transport",
+      "Autre",
+    ]);
     const setChanges = () => {
       if (Enseigne.value !== "" && Prix.value !== "") {
         $store.commit("tickets/setChanges", [
@@ -121,6 +142,7 @@ export default {
             prix: Prix.value,
             tag: Tag.value,
             typeAchat: TypeAchat.value,
+            realTime: date.extractDate(DateA.value, "YYYY/MM/DD").getTime(),
           },
         ]);
         $q.notify({
@@ -150,6 +172,7 @@ export default {
     };
     return {
       DateA,
+      options,
       Heure,
       Prix,
       Tag,
