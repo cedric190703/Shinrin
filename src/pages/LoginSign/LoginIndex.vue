@@ -32,9 +32,8 @@
       </template>
     </q-input>
     <q-btn
-      style="width: 80%; margin-top: 12%; border-radius: 20px; height: 50px"
+      style="width: 80%; margin-top: 10%; border-radius: 20px; height: 50px"
       class="text-white bg-primary"
-      to="/home"
       @click="login()"
     >
       Se connecter
@@ -48,9 +47,11 @@
 import { useStore } from "vuex";
 import { useQuasar } from "quasar";
 import { ref, computed } from "vue";
+import { useRouter } from "vue-router";
 export default {
   setup() {
     const $q = useQuasar();
+    const router = useRouter();
     const $store = useStore();
     const password = ref("");
     const email = ref("");
@@ -64,17 +65,32 @@ export default {
       });
     };
     const login = () => {
-      $q.notify({
-        message: "Vous êtes bien connecté !",
-        color: "positive",
-        actions: [
-          {
-            label: "OK",
-            color: "white",
-            handler: () => {},
-          },
-        ],
-      });
+      if (password.value !== "" && email.value !== "") {
+        router.push({ path: "/home" });
+        $q.notify({
+          message: "Vous êtes bien connecté !",
+          color: "positive",
+          actions: [
+            {
+              label: "OK",
+              color: "white",
+              handler: () => {},
+            },
+          ],
+        });
+      } else {
+        $q.notify({
+          message: "Des champs requis n'ont pas été remplis",
+          color: "negative",
+          actions: [
+            {
+              label: "OK",
+              color: "white",
+              handler: () => {},
+            },
+          ],
+        });
+      }
     };
     const isPwd = ref(true);
     return {
@@ -100,7 +116,7 @@ export default {
 }
 
 #create {
-  margin-top: 25%;
+  margin-top: 17%;
   width: 80%;
   background-color: #3f0cd8;
   height: 50px;

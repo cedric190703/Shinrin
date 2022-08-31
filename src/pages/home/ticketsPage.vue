@@ -33,8 +33,8 @@
     <div>
       <q-intersection
         class="tickets"
-        v-show="filter().length > 0"
-        v-for="(item, index) in filter()"
+        v-show="filtered().length > 0"
+        v-for="(item, index) in filtered()"
         :key="index"
         once
         transition="scale"
@@ -53,7 +53,7 @@
     <div
       class="no-tickets"
       style="text-align: center"
-      v-show="filter().length === 0"
+      v-show="filtered().length === 0"
     >
       <img
         src="../../assets/tiquets.png"
@@ -174,6 +174,7 @@
 import { useStore } from "vuex";
 import { useQuasar } from "quasar";
 import { ref, computed } from "vue";
+import { date } from "quasar";
 import TicketComp from "src/components/ticketComp.vue";
 import AddTicket from "src/components/addTicket.vue";
 import FiltresComp from "../../components/filtresComp.vue";
@@ -194,6 +195,7 @@ export default {
         $store.commit("tickets/setCard");
       },
     });
+
     const info = computed({
       get: () => $store.state.tickets.info,
       set: (val) => {
@@ -215,35 +217,35 @@ export default {
     const setInfo = () => {
       $store.commit("tickets/setInfo");
     };
-    const filtre = ref("Enseigne");
-    const priceMax = ref(0);
-    const priceMin = ref(0);
-    const filter = () => {
-      if ($store.state.tickets.tickets.length === 0) {
-        return [];
-      }
-      if (filtre.value === "Enseigne") {
-        console.log("enseigne");
-        return $store.state.tickets.tickets.filter((ticket) =>
-          ticket.enseigne.includes(search.value)
-        );
-      } else if (filtre.value === "Tag") {
-        console.log("tag");
-        return $store.state.tickets.tickets.filter((ticket) =>
-          ticket.tag.includes(search.value)
-        );
-      } else {
-        console.log("price");
-        return [];
-        // return $store.state.tickets.tickets.filter((ticket) =>
-        //   ticket.price <= priceMax.value && ticket.price >= priceMin.value
-        // );
-      }
-    };
+    const filtre = computed({
+      get: () => $store.state.tickets.filtre,
+      set: (val) => {
+        $store.commit("tickets/setFiltre", val);
+      },
+    });
+    const PriceMin = computed({
+      get: () => $store.state.tickets.PriceMin,
+      set: (val) => {
+        $store.commit("tickets/setFiltre");
+      },
+    });
+    const PriceMax = computed({
+      get: () => $store.state.tickets.PriceMax,
+      set: (val) => {
+        $store.commit("tickets/setFiltre");
+      },
+    });
+    const dateRange = computed({
+      get: () => $store.state.tickets.dateRange,
+      set: (val) => {
+        $store.commit("tickets/setFiltre");
+      },
+    });
     const sortTicket = () => {};
     const checkFileType = (File) => {
       if (
         File[0].type === "image/png" ||
+        File[0].type === "application/pdf" ||
         File[0].type === "image/jpg" ||
         File[0].type === "image/jpeg"
       ) {
@@ -251,6 +253,36 @@ export default {
         return File;
       } else {
         return "text/plain";
+      }
+    };
+    const filtered = () => {
+      if ($store.state.tickets.tickets.length !== 0) {
+        if (filtre.value === "Enseigne") {
+          return $store.state.tickets.tickets.filter((ticket) =>
+            ticket.enseigne.includes(search.value)
+          );
+        } else if (filtre.value === "Tag") {
+          return $store.state.tickets.tickets.filter(
+            (ticket) => ticket.tag.includes(search.value) && ticket.tag !== ""
+          );
+        } else if (filtre.value === "Date") {
+          return $store.state.tickets.tickets.filter((ticket) =>
+            date.isBetweenDates(
+              ticket.date,
+              dateRange.value.from,
+              dateRange.value.to
+            )
+          );
+        } else {
+          return $store.state.tickets.tickets.filter(
+            (ticket) =>
+              ticket.prix >= PriceMin.value &&
+              ticket.prix <= PriceMax.value &&
+              ticket.enseigne.includes(search.value)
+          );
+        }
+      } else {
+        return [];
       }
     };
     const onRejected = () => {
@@ -278,15 +310,16 @@ export default {
       onRejected,
       setCard,
       file,
+      PriceMin,
+      PriceMax,
       checkFileType,
       setInfo,
       sortTicket,
       type,
       info,
-      filter,
+      filtered,
+      dateRange,
       setUpload,
-      priceMax,
-      priceMin,
       filtre,
     };
   },

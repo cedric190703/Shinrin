@@ -13,7 +13,7 @@
     <div class="text-center q-mb-lg">
       <q-btn round>
         <q-avatar size="95px">
-          <img src="https://cdn.quasar.dev/img/avatar2.jpg" />
+          <q-file standout v-model="model" />
         </q-avatar>
       </q-btn>
       <q-btn

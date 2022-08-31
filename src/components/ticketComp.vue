@@ -12,6 +12,13 @@
         <div class="text-h6" style="color: #155fd7">
           {{ hashTag() }}{{ tag }}
         </div>
+        <q-btn
+          v-show="typeAchat !== ''"
+          :icon="selectIcon()"
+          :name="typeAchat"
+          color="purple-8"
+          class="q-mt-md q-mb-md"
+        />
         <div class="text-h9">{{ date }}</div>
         <div class="text-h10">{{ heure }}</div>
       </q-card-section>
@@ -85,6 +92,59 @@ export default {
   setup(props) {
     const $q = useQuasar();
     const $store = useStore();
+    const selectIcon = () => {
+      let icon = "";
+      switch (props.typeAchat) {
+        case "Alimentation":
+          icon = "restaurant";
+          break;
+        case "Artisan":
+          icon = "construction";
+          break;
+        case "Centre commercial":
+          icon = "shopping_bag";
+          break;
+        case "Commerces de proximité":
+          icon = "storefront";
+          break;
+        case "Culture":
+          icon = "museum";
+          break;
+        case "Divers":
+          icon = "architecture";
+          break;
+        case "Habillement":
+          icon = "checkroom";
+          break;
+        case "Jardinage et bricolage":
+          icon = "yard";
+          break;
+        case "Maison et décoration":
+          icon = "chair";
+          break;
+        case "Santé et bien-être":
+          icon = "medication_liquid";
+          break;
+        case "Services":
+          icon = "local_shipping";
+          break;
+        case "Sortir":
+          icon = "casino";
+          break;
+        case "Sports et loisirs":
+          icon = "sports_tennis";
+          break;
+        case "Tourisme":
+          icon = "hotel";
+          break;
+        case "Transport":
+          icon = "flight";
+          break;
+        default:
+          icon = "shopping_cart";
+      }
+      return icon;
+    };
     const hashTag = () => {
       if (props.tag !== "") {
         return "#";
@@ -132,6 +192,7 @@ export default {
       viewTicket,
       consulterTicket,
       hashTag,
+      selectIcon,
     };
   },
   components: { ConsulterTicket },

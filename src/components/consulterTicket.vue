@@ -66,7 +66,7 @@
     </q-card-section>
 
     <div style="text-align: center">
-      <q-date v-model="Date" />
+      <q-date v-model="DateA" />
       <q-time v-model="Heure" />
     </div>
     <q-card-section>
@@ -92,7 +92,7 @@ export default {
   setup(props) {
     const $q = useQuasar();
     const $store = useStore();
-    const Date = ref(props.date);
+    const DateA = ref(props.date);
     const Heure = ref(props.heure);
     const Prix = ref(props.prix);
     const Tag = ref(props.tag);
@@ -115,7 +115,7 @@ export default {
         $store.commit("tickets/setChanges", [
           props.index,
           {
-            date: Date.value,
+            date: DateA.value,
             heure: Heure.value,
             enseigne: Enseigne.value,
             prix: Prix.value,
@@ -149,7 +149,7 @@ export default {
       }
     };
     return {
-      Date,
+      DateA,
       Heure,
       Prix,
       Tag,

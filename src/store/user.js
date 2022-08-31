@@ -8,6 +8,7 @@ const state = {
     email: "",
     password: "",
     modeSombre: false,
+    avatar: "",
   },
   element: "",
 };

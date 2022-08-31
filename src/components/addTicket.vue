@@ -3,7 +3,7 @@
     <q-card-section>
       <div class="text-h6">Informations sur le fichier</div>
     </q-card-section>
-    <q-card-section>
+    <q-card-section style="margin-bottom: -5%">
       <q-input
         filled
         :rules="[(val) => !!val || 'Ce champ est requis']"
@@ -22,7 +22,7 @@
         </template>
       </q-input>
     </q-card-section>
-    <q-card-section>
+    <q-card-section style="margin-bottom: -5%">
       <q-input
         filled
         step="any"
@@ -40,11 +40,13 @@
       </q-input>
     </q-card-section>
     <q-card-section class="q-pb-lg">
-      <q-input filled v-model="typeAchat" label="Type d'achat(optionnel)">
-        <template v-slot:prepend>
-          <q-icon name="shopping_bag" />
-        </template>
-      </q-input>
+      <q-select
+        rounded
+        outlined
+        v-model="typeAchat"
+        :options="options"
+        label="Type d'achat(optionnel)"
+      />
     </q-card-section>
 
     <div style="text-align: center">
@@ -70,24 +72,43 @@ export default {
   name: "addTiquet",
   setup() {
     const $store = useStore();
-    const tiquet = ref([]);
     const $q = useQuasar();
+    const tiquet = ref([]);
+    const options = ref([
+      "Alimentation",
+      "Artisan",
+      "Commerces de proximité",
+      "Culture",
+      "Centre commercial",
+      "Divers",
+      "Habillement",
+      "Jardinage et bricolage",
+      "Maison et décoration",
+      "Santé et bien-être",
+      "Services",
+      "Sortir",
+      "Sports et loisirs",
+      "Tourisme",
+      "Transport",
+      "Autre",
+    ]);
     const enseigne = ref("");
     const tag = ref("");
     const prix = ref("");
     const typeAchat = ref("");
-    const timeStamp = Date.now();
-    const dateA = date.formatDate(timeStamp, "YYYY/MM/0d");
+    const timeStamp = new Date();
+    const dateA = date.formatDate(timeStamp, "YYYY/MM/DD");
     const heure = date.formatDate(timeStamp, "HH:mm");
     const addTiquet = () => {
       if (enseigne.value !== "" && prix.value !== "") {
         tiquet.value = {
           enseigne: enseigne.value,
           tag: tag.value,
-          prix: prix.value,
+          prix: parseInt(prix.value),
           typeAchat: typeAchat.value,
           date: dateA,
           heure: heure,
+          realTime: timeStamp.getTime(),
         };
         $store.commit("tickets/addTicket", tiquet.value);
       } else {
@@ -109,6 +130,7 @@ export default {
       tag,
       prix,
       typeAchat,
+      options,
       dateA,
       heure,
       addTiquet,
