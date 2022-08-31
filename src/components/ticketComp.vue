@@ -32,7 +32,7 @@
       >
         <q-btn-dropdown split flat round dropdown-icon="more_vert">
           <q-list>
-            <q-item clickable v-close-popup>
+            <q-item clickable v-close-popup @click="consulterTicket()">
               <q-item-section avatar>
                 <q-avatar
                   icon="saved_search"
@@ -41,9 +41,7 @@
                 />
               </q-item-section>
               <q-item-section>
-                <q-item-label @click="consulterTicket()"
-                  >Consulter le ticket</q-item-label
-                >
+                <q-item-label>Consulter le ticket</q-item-label>
               </q-item-section>
             </q-item>
             <q-item clickable v-close-popup>
@@ -54,11 +52,11 @@
                 <q-item-label>Télécharger</q-item-label>
               </q-item-section>
             </q-item>
-            <q-item clickable v-close-popup>
+            <q-item clickable v-close-popup @click="removeTicket()">
               <q-item-section avatar>
                 <q-avatar icon="delete" color="purple-9" text-color="white" />
               </q-item-section>
-              <q-item-section @click="removeTicket()">
+              <q-item-section>
                 <q-item-label>Supprimer</q-item-label>
               </q-item-section>
             </q-item>
