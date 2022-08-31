@@ -1,4 +1,3 @@
-import { date } from "quasar";
 const state = {
   tickets: [],
   card: false,
@@ -15,6 +14,7 @@ const state = {
   PriceMin: 0,
   PriceMax: 350,
   dateRange: { from: "2022/07/08", to: "2022/07/31" },
+  index: 0,
 };
 
 const guetters = {};
@@ -39,7 +39,6 @@ const mutations = {
     state.IntervalPrice = [elt[1], elt[2]];
   },
   nouvelleDate: (state, range) => {
-    console.log("here WTF");
     state.dateSet = !state.dateSet;
     state.dateRange = range;
   },
@@ -54,6 +53,9 @@ const mutations = {
   },
   zoomTicket: (state) => {
     state.zoomTicket = !state.zoomTicket;
+  },
+  setIndex: (state, index) => {
+    state.index = index;
   },
   setFiltre: (state, filtre) => {
     state.filtre = filtre;

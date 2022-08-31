@@ -13,7 +13,7 @@
     <div class="text-center q-mb-lg">
       <q-btn round>
         <q-avatar size="95px">
-          <q-file standout v-model="model" />
+          <q-file standout />
         </q-avatar>
       </q-btn>
       <q-btn

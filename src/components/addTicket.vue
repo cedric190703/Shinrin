@@ -111,6 +111,7 @@ export default {
           realTime: timeStamp.getTime(),
         };
         $store.commit("tickets/addTicket", tiquet.value);
+        $store.commit("tickets/setTri", $store.state.tickets.tri);
       } else {
         $q.notify({
           message: "Des champs n'ont pas été remplis",

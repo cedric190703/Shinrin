@@ -30,25 +30,23 @@
         </template>
       </q-input>
     </div>
-    <div>
-      <q-intersection
-        class="tickets"
-        v-show="filtered().length > 0"
-        v-for="(item, index) in filtered()"
-        :key="index"
-        once
-        transition="scale"
-      >
-        <TicketComp
-          :index="index"
-          :enseigne="item.enseigne"
-          :date="item.date"
-          :heure="item.heure"
-          :prix="item.prix"
-          :tag="item.tag"
-          :typeAchat="item.typeAchat"
-        />
-      </q-intersection>
+    <div
+      class="tickets"
+      v-show="filtered().length > 0"
+      v-for="(item, index) in filtered()"
+      :key="index"
+      once
+      transition="scale"
+    >
+      <TicketComp
+        :index="index"
+        :enseigne="item.enseigne"
+        :date="item.date"
+        :heure="item.heure"
+        :prix="item.prix"
+        :tag="item.tag"
+        :typeAchat="item.typeAchat"
+      />
     </div>
     <div
       class="no-tickets"
@@ -168,6 +166,11 @@
         </q-card>
       </q-dialog>
     </q-page-sticky>
+    <q-dialog v-model="viewTicket">
+      <q-card class="my-card">
+        <ConsulterTicket />
+      </q-card>
+    </q-dialog>
   </div>
 </template>
 <script>
@@ -179,6 +182,7 @@ import TicketComp from "src/components/ticketComp.vue";
 import AddTicket from "src/components/addTicket.vue";
 import FiltresComp from "../../components/filtresComp.vue";
 import TriComp from "../../components/triComp.vue";
+import ConsulterTicket from "src/components/consulterTicket.vue";
 export default {
   setup() {
     // Recherche
@@ -285,6 +289,12 @@ export default {
         return [];
       }
     };
+    const viewTicket = computed({
+      get: () => $store.state.tickets.viewTicket,
+      set: (val) => {
+        $store.commit("tickets/consultTicket");
+      },
+    });
     const onRejected = () => {
       $q.notify({
         type: "negative",
@@ -313,6 +323,7 @@ export default {
       PriceMin,
       PriceMax,
       checkFileType,
+      viewTicket,
       setInfo,
       sortTicket,
       type,
@@ -323,7 +334,7 @@ export default {
       filtre,
     };
   },
-  components: { TicketComp, AddTicket, FiltresComp, TriComp },
+  components: { TicketComp, AddTicket, FiltresComp, TriComp, ConsulterTicket },
 };
 </script>
 <style>

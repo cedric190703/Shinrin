@@ -65,19 +65,6 @@
           </q-list>
         </q-btn-dropdown>
       </q-card-section>
-      <q-dialog v-model="viewTicket">
-        <q-card class="my-card">
-          <ConsulterTicket
-            :index="index"
-            :enseigne="enseigne"
-            :date="date"
-            :heure="heure"
-            :prix="prix"
-            :tag="tag"
-            :typeAchat="typeAchat"
-          />
-        </q-card>
-      </q-dialog>
     </q-card>
   </div>
 </template>
@@ -85,13 +72,13 @@
 <script>
 import { useStore } from "vuex";
 import { useQuasar } from "quasar";
-import { computed } from "vue";
-import ConsulterTicket from "./consulterTicket.vue";
+import { computed, ref } from "vue";
 export default {
   props: ["index", "enseigne", "date", "heure", "prix", "tag", "typeAchat"],
   setup(props) {
     const $q = useQuasar();
     const $store = useStore();
+    const Index = ref(props.index);
     const selectIcon = () => {
       let icon = "";
       switch (props.typeAchat) {
@@ -151,14 +138,10 @@ export default {
       }
     };
     const consulterTicket = () => {
+      $store.commit("tickets/setIndex", props.index);
       $store.commit("tickets/consultTicket");
     };
-    const viewTicket = computed({
-      get: () => $store.state.tickets.viewTicket,
-      set: (val) => {
-        $store.commit("tickets/consultTicket");
-      },
-    });
+
     const removeTicket = () => {
       $q.dialog({
         title: "Confirmer",
@@ -189,12 +172,11 @@ export default {
     };
     return {
       removeTicket,
-      viewTicket,
       consulterTicket,
       hashTag,
       selectIcon,
+      Index,
     };
   },
-  components: { ConsulterTicket },
 };
 </script>

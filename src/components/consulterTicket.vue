@@ -91,16 +91,23 @@ import { useQuasar } from "quasar";
 import { ref, computed } from "vue";
 import ZoomTicket from "./zoomTicket.vue";
 export default {
-  props: ["index", "enseigne", "date", "heure", "prix", "tag", "typeAchat"],
-  setup(props) {
+  setup() {
     const $q = useQuasar();
     const $store = useStore();
-    const DateA = ref(props.date);
-    const Heure = ref(props.heure);
-    const Prix = ref(props.prix);
-    const Tag = ref(props.tag);
-    const TypeAchat = ref(props.typeAchat);
-    const Enseigne = ref(props.enseigne);
+    const Tickets = computed({
+      get: () => $store.state.tickets.tickets,
+    });
+    const Index = computed({
+      get: () => $store.state.tickets.index,
+    });
+    console.log($store.state.tickets.index);
+    console.log(Tickets.value[Index.value]);
+    const DateA = ref(Tickets.value[Index.value].date);
+    const Heure = ref(Tickets.value[Index.value].heure);
+    const Prix = ref(Tickets.value[Index.value].prix);
+    const Tag = ref(Tickets.value[Index.value].tag);
+    const TypeAchat = ref(Tickets.value[Index.value].typeAchat);
+    const Enseigne = ref(Tickets.value[Index.value].enseigne);
     const zoomerTicket = () => {
       $store.commit("tickets/zoomTicket");
     };
@@ -134,7 +141,7 @@ export default {
     const setChanges = () => {
       if (Enseigne.value !== "" && Prix.value !== "") {
         $store.commit("tickets/setChanges", [
-          props.index,
+          Index.value,
           {
             date: DateA.value,
             heure: Heure.value,
@@ -145,6 +152,7 @@ export default {
             realTime: date.extractDate(DateA.value, "YYYY/MM/DD").getTime(),
           },
         ]);
+        $store.commit("tickets/setTri", $store.state.tickets.tri);
         $q.notify({
           type: "positive",
           message: `Votre ticket a bien été modifié`,
@@ -182,6 +190,7 @@ export default {
       close,
       zoomTicket,
       zoomerTicket,
+      Index,
     };
   },
   components: { ZoomTicket },
