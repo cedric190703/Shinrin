@@ -11,7 +11,7 @@
         <template v-slot:before>
           <q-avatar>
             <img
-              src="https://cdn.quasar.dev/img/avatar5.jpg"
+              :src="avatar"
               style="
                 position: absolute;
                 width: 55px;
@@ -188,11 +188,12 @@ export default {
     // Recherche
     const search = ref("");
     // variables pour la nav
+    const $store = useStore();
     const $q = useQuasar();
     const file = ref(null);
     const type = ref("");
     const count = ref(1);
-    const $store = useStore();
+    const avatar = ref($store.state.user.user.avatar);
     const card = computed({
       get: () => $store.state.tickets.card,
       set: (val) => {
@@ -318,6 +319,7 @@ export default {
       search,
       TakePhoto,
       onRejected,
+      avatar,
       setCard,
       file,
       PriceMin,

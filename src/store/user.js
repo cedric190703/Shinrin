@@ -2,13 +2,14 @@ const state = {
   users: [],
   userStatus: false,
   user: {
-    nom: "",
-    prenom: "",
-    telephone: "",
-    email: "",
-    password: "",
+    nom: "Nom",
+    prenom: "Prenom",
+    telephone: "0634120912",
+    email: "exemple@gmail.com",
+    password: "118218",
     modeSombre: false,
-    avatar: "",
+    avatar:
+      "https://th.bing.com/th/id/OIP.ezvLBxiKJAB4x5uTqBb35QHaHa?pid=ImgDet&rs=1",
   },
   element: "",
 };
@@ -33,6 +34,9 @@ const mutations = {
     console.log("Etape One passed");
     (state.user.email = user.email), (state.user.password = user.password);
   },
+  setAvatar: (state, image) => {
+    state.user.avatar = image;
+  },
   UserLogin: (state, user) => {
     console.log("try to log user");
     state.users.forEach((element) => {
@@ -41,6 +45,10 @@ const mutations = {
         return;
       }
     });
+  },
+  setUser: (state, user) => {
+    console.log("hello");
+    state.user = user;
   },
 };
 

@@ -10,7 +10,7 @@
         <template v-slot:before>
           <q-avatar>
             <img
-              src="https://cdn.quasar.dev/img/avatar5.jpg"
+              :src="avatar"
               style="
                 position: absolute;
                 width: 55px;
@@ -43,18 +43,7 @@
         </template>
       </q-input>
     </div>
-    <div>
-      <q-intersection
-        class="tiquets"
-        v-show="count > 0"
-        v-for="n in 15"
-        :key="n"
-        once
-        transition="scale"
-      >
-        <WalletComp />
-      </q-intersection>
-    </div>
+
     <div class="no-tiquets" style="text-align: center" v-show="count === 0">
       <img
         src="../../assets/wallet.png"
@@ -64,21 +53,38 @@
       <div class="text-h4 text-purple-8">Pas de carte de fidélité</div>
     </div>
     <q-page-sticky position="bottom-right" :offset="[18, 18]">
-      <q-btn fab icon="add" color="purple-9" />
+      <q-btn fab icon="add" color="purple-9" @click="setViewer()" />
+      <q-dialog v-model="viewer"> <TakePhoto /> </q-dialog>
     </q-page-sticky>
   </div>
 </template>
 <script>
-import { ref } from "vue";
-import WalletComp from "../../components/walletComp.vue";
+import { useStore } from "vuex";
+import { ref, onMounted, computed } from "vue";
+import TakePhoto from "src/components/takePhoto.vue";
 export default {
   setup() {
+    const $store = useStore();
+    const avatar = ref($store.state.user.user.avatar);
+    const viewer = computed({
+      get: () => $store.state.wallet.PhotoViewer,
+      set: (val) => {
+        $store.commit("wallet/setStatus", val);
+      },
+    });
+
     const count = ref(0);
+    const setViewer = () => {
+      $store.commit("wallet/setViewer");
+    };
     return {
+      setViewer,
+      viewer,
+      avatar,
       count,
     };
   },
-  components: { WalletComp },
+  components: { TakePhoto },
 };
 </script>
 <style></style>

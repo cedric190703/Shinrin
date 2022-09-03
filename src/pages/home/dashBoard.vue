@@ -9,7 +9,7 @@
       <template v-slot:before>
         <q-avatar>
           <img
-            src="https://cdn.quasar.dev/img/avatar5.jpg"
+            :src="avatar"
             style="position: absolute; width: 55px; height: 55px; padding: 10%"
           />
         </q-avatar>
@@ -41,12 +41,16 @@
   </div>
 </template>
 <script>
+import { useStore } from "vuex";
 import { ref } from "vue";
 export default {
   setup() {
+    const $store = useStore();
+    const avatar = ref($store.state.user.user.avatar);
     const count = ref(0);
     return {
       count,
+      avatar,
     };
   },
 };

@@ -100,8 +100,6 @@ export default {
     const Index = computed({
       get: () => $store.state.tickets.index,
     });
-    console.log($store.state.tickets.index);
-    console.log(Tickets.value[Index.value]);
     const DateA = ref(Tickets.value[Index.value].date);
     const Heure = ref(Tickets.value[Index.value].heure);
     const Prix = ref(Tickets.value[Index.value].prix);
