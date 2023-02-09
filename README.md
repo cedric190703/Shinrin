@@ -1,6 +1,6 @@
 # Shinrin (shinrin)
 
-Shinrin App project code in VueJs with Quasar
+Shinrin App project code in VueJs with Quasar the framework
 
 ## Install the dependencies
 ```bash
